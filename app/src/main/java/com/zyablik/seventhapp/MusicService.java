@@ -8,13 +8,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 public class MusicService extends Service {
     private static final String TAG = "MusicService";
     private MediaPlayer mediaPlayer;
-    private TextView music_state;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,8 +24,7 @@ public class MusicService extends Service {
         if (!mediaPlayer.isPlaying()){
             mediaPlayer.start();
             Toast.makeText(MusicService.this, "Start playing...", Toast.LENGTH_LONG).show();
-            music_state.findViewById(R.id.music_state);
-            music_state.setText("Playing");
+            Log.d(TAG, "Playing");
         }
         return START_STICKY;
     }
@@ -41,6 +36,7 @@ public class MusicService extends Service {
             mediaPlayer.stop();
             mediaPlayer.release();
             Log.d(TAG, "Music stopped");
+            Toast.makeText(MusicService.this, "Stop playing...", Toast.LENGTH_LONG).show();
         }
     }
 
