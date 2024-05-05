@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MusicService extends Service {
     private static final String TAG = "MusicService";
-    private MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,7 +29,6 @@ public class MusicService extends Service {
         }
         return START_STICKY;
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -1,12 +1,19 @@
 package com.zyablik.seventhapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +30,7 @@ public class Alert extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    AlertDialog.Builder builder;
     public Alert() {
         // Required empty public constructor
     }
@@ -53,6 +60,31 @@ public class Alert extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        builder = new AlertDialog.Builder(view.getContext());
+        Button button = view.findViewById(R.id.alert_button);
+        button.setOnClickListener(v -> {
+            builder.setTitle("Confirm");
+            builder.setMessage("Are you sure you want change fragment?");
+            builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+            builder.setPositiveButton("Yes", (dialog, which) -> {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Fragment fragment;
+                FragmentTransaction transaction;
+                fragment = new Music();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragmentContainerView, fragment, "music").commit();
+            });
+
+            builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 
     @Override

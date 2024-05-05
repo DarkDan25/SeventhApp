@@ -1,14 +1,22 @@
 package com.zyablik.seventhapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.ConditionVariable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +63,23 @@ public class Music extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button play_button = view.findViewById(R.id.play);
+        Button stop_button = view.findViewById(R.id.stop);
+        Context c = getContext();
+        play_button.setOnClickListener(v -> {
+            Intent intent = new Intent(c, MusicService.class);
+            c.startService(intent);
+        });
+        stop_button.setOnClickListener(v -> {
+            Intent intent = new Intent(c, MusicService.class);
+            c.stopService(intent);
+        });
     }
 
     @Override
